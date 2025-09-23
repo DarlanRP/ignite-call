@@ -127,7 +127,6 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
       ...nextMonthFillArray.map((date) => {
         return { date, disabled: true }
       }),
-      ,
     ]
 
     const calendarWeeks = calendarDays.reduce<CalendarWeeks>(
