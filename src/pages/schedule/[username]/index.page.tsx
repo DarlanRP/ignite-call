@@ -39,26 +39,27 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const username = String(params?.username)
 
-  const user = await prisma.user.findUnique({
-    where: {
-      username,
-    },
-  })
+  try {
+    const user = await prisma.user.findUnique({
+      where: { username },
+    })
 
-  if (!user) {
-    return {
-      notFound: true,
+    if (!user) {
+      return { notFound: true }
     }
-  }
 
-  return {
-    props: {
-      user: {
-        name: user.name,
-        bio: user.bio,
-        avatarUrl: user.avatar_url,
+    return {
+      props: {
+        user: {
+          name: user.name,
+          bio: user.bio,
+          avatarUrl: user.avatar_url || '',
+        },
       },
-    },
-    revalidate: 60 * 60 * 24, // 1 dia
+      revalidate: 60 * 60 * 24,
+    }
+  } catch (error) {
+    console.error('Erro ao buscar usuário:', error)
+    return { notFound: true }
   }
 }
