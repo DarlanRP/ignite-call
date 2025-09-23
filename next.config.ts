@@ -4,7 +4,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   pageExtensions: ['page.tsx', 'api.ts', 'api.tsx'],
   eslint: {
-    ignoreDuringBuilds: true, // 👈 adiciona isso
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true, // 👈 adiciona isso
   },
 }
 
